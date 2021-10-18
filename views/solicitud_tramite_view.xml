@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- DATOS DE LA SOLICITUD -->
+    <record id="solicitud_form_view" model="ir.ui.view">
+        <field name="name">solicitud.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">sol.tramite</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="tramitebase" id="tramitebase">
+
+                <header>
+                    <button name="envio_tramite" type="object" string="Enviar solicitud"
+                            attrs="{'invisible': [('status', '!=', 'pendiente')]}" class="btn-info"/>
+
+                    <button name="responder_requerimiento" type="object" string="Enviar requerimiento"
+                            attrs="{'invisible': [('status', '!=', 'notificado')]}" class="btn-info"/>
+
+                    <field name="status"  widget="statusbar" statusbar_visible="pendiente,enviado"/>
+                </header>
+                <sheet>
+                    <sheet><h2>Datos generales de la solicitud</h2></sheet>
+                    <hr/>
+                    <attribute name="string">Persona que el representante legal de la IAP, designó para recibir notificaciones</attribute>
+                    <group>
+                        <group>
+                            <field name="personavalida"/>
+                            <field name="telefono"/>
+                            <field name="correo"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="observaciones"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" invisible="1"/>
+                </div>
+            </form>
+        </field>
+
+    </record>
+
+    <!-- TIPO DE VISTA ARBOL -->
+    <record id="solicitud_tree_view" model="ir.ui.view">
+        <field name="name">solicitud.tree.view</field><!--es la etiequeta del nombre de la vista -->
+        <field name="model">sol.tramite</field><!--esta etiqueta se refiere a nuestro modelo -->
+        <field name="arch" type="xml">
+            <!-- aqui vamos a definir el tipo de vista-->
+            <tree string="EstatusTram" decoration-danger="status == 'pendiente'" decoration-warning="status == 'notificado'"  >
+
+                <field name="id"/>
+                <field name="personavalida"/>
+                <field name="create_date" string="Fecha de creación"/>
+                <field name="status" string="Estatus" widget="badge" decoration-info="status== 'enviado'"  decoration-success="status== 'autorizado'" decoration-danger="status == 'rechazado' " decoration-warning="status == 'notificado' " />
+
+                <button name="ver_requerimiento" class="fa fa-eye  bg-info" attrs="{'invisible': [('status', '!=', 'notificado')]}"
+                        type="object"  string="- Ver requerimiento"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <!--VISTA KANBAN -->
+    <record id="solicitud_kanban_view" model="ir.ui.view">
+        <field name="name">solicitudesbase.kanban</field>
+        <field name="model">sol.tramite</field>
+        <field name="arch" type="xml">
+
+            <kanban>
+                 <field name="estatusjap" invisible="1"/>
+                 <field name="status"/>
+                <templates>
+                <t t-name="kanban-box">
+
+                    <div class="oe_kanban_content">
+                        <field name="estatusjap" invisible="1"/>
+                        <t t-if="record.estatusjap.value == '4'">
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                   <div class="fa fa-refresh "></div> Etapa final
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="record.estatusjap.value == '3'">
+                            <div class="card">
+                                <div class="card-header" style="background-color:#fd7e14">
+                                   <div class="fa fa-refresh "></div> Análisis
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="record.estatusjap.value == '2'">
+                            <div class="card">
+                                <div class="card-header bg-warning">
+                                   <div class="fa fa-bell "></div> Se realiará requerimiento a su solicitud
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="record.estatusjap.value == '1'">
+                            <div class="card">
+                                <div class="card-header" style="background-color:#20c997">
+                                   <div class="fa fa-bell"></div> Pendiente de revisar
+                                </div>
+                            </div>
+                        </t>
+                         <ul>
+                            <li>Tramite: <field name="tipotram"/></li>
+                            <li>Folio: <field name="id"/></li>
+                            <li>Estatus:
+                                 <field name="status" string="Estatus" widget="badge" decoration-info="status== 'enviado'"  decoration-success="status== 'autorizado'" decoration-danger="status == 'rechazado' " decoration-warning="status == 'notificado' " />
+
+                            </li>
+                            <li>Fecha de envío: <field name="create_date"/></li>
+                             <li><b>Asesor Asignado:</b> <field name="asesortramite" class="text-danger"/></li>
+                        </ul>
+                        <div class="oe_kanban_footer" align="right">
+                            <button name="tiempos_tramite" type="object" string="Ver tiempos de respuesta"
+                                    class="btn-success"><div class="fa fa-history "></div> <span>Ver Historial</span></button>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+            </kanban>
+
+
+        </field>
+    </record>
+
+    <!--VISTA PIVOT -->
+    <record id="solicitud_pivot_view" model="ir.ui.view">
+        <field name="model">sol.tramite</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="status"/>
+                <field name="id"/>
+                <field name="create_date"/>
+
+                <field name="estatusjap"/>
+
+            </pivot>
+
+        </field>
+    </record>
+
+</odoo>

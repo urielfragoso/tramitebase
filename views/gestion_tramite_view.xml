@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--TREE -->
+    <record id="gestion_tramite_tree_view" model="ir.ui.view">
+        <field name="name">solicitud.tramitebase.tree.view</field><!--es la etiequeta del nombre de la vista -->
+        <field name="model">tramite.gestion.base</field><!--esta etiqueta se refiere a nuestro modelo -->
+
+        <field name="arch" type="xml">
+            <!-- aqui vamos a definir el tipo de vista-->
+            <tree string="EstatusTram" decoration-info="EstatusTram == 'viable'" decoration-danger="EstatusTram == 'pendiente'" decoration-success="EstatusTram == 'autorizado'"    create="false">
+                <field name="RefIdIAP"  />
+                <field name="RefIdUsuario"/>
+                <field name="RefIdTipoTram"/>
+                <field name="EstatusTram" />
+                <field name="RefidSolicitud"/>
+                <field name="create_date" string="Fecha de envio"/>
+                <button name="abrir_folio" type="object" string="Ver solicitud" class="btn-info"/>
+
+            </tree>
+        </field>
+    </record>
+    <!--KANBAN -->
+    <record id="solicitudes_tramite_kanban_view" model="ir.ui.view">
+        <field name="name">solicitud.base.kanban</field>
+        <field name="model">tramite.gestion.base</field>
+        <field name="arch" type="xml">
+
+            <kanban default_group_by="EstatusTram" class="o_kanban_small_column" quick_create="false">
+
+                <field name="id"/>
+                <field name="RefIdIAP"/>
+                <field name="EstatusTram"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+
+                            <div class="oe_kanban_card">
+
+                            <div class="oe_kanban_content">
+                                <strong><field name="RefIdIAP" style="text-color:red"/></strong>
+                                <ul>
+                                    <li>Tramite: <field name="RefIdTipoTram"/></li>
+                                    <li>Folio: <field name="RefidSolicitud"/></li>
+                                    <li>Estatus: <field name="EstatusTram"/></li>
+                                    <li>Fecha de envío: <field name="create_date"/></li>
+                                </ul>
+
+                                     <div class="oe_kanban_bottom_right">
+                                         <!-- SE MUESTRA BOTON PARA VER LA SOLICITUD-->
+                                            <button name="abrir_folio" type="object" class="oe_button btn-info">Ver solicitud</button>
+
+                                         <!-- SE MUESTRA BOTON CUANDO ESTA EN LA ETAPA DE REQUERIMIENTO-->
+                                            <button  name="requerimientoventana" type="object" class="oe_button btn-warning"
+                                                    attrs="{'invisible':[('EstatusTram','!=','2')]}">Requerimiento</button>
+                                         <!-- SE MUESTRA BOTON CUANDO ESTA EN LA ETAPA DE ANALISIS -->
+                                            <button  name="analisis" type="object" class="oe_button btn-danger"
+                                                    attrs="{'invisible':[('EstatusTram','!=','3')]}">Analisis</button>
+                                            <button  name="resultado" type="object" class="oe_button btn-success"
+                                                    attrs="{'invisible':[('EstatusTram','!=','4')]}">Resultado</button>
+                                    </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+
+</odoo>

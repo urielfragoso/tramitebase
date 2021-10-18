@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="analisistramite_form_view" model="ir.ui.view">
+        <field name="name">analisistramite.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">sol.analisis</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="Analisis del tramite" id="analisis">
+
+                <sheet>
+                    <h2>Analisis base</h2>
+                    <group>
+                        <group>
+                            <field name="observaciones"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+
+    </record>
+
+</odoo>

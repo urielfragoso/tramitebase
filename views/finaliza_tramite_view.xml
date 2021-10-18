@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="finaliza_tramite_form_view" model="ir.ui.view">
+        <field name="name">tramitebase.finaliza.tramite.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">tramite.gestion.base</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="alta tramite" id="altatramite" >
+
+                <header align="center">
+                    <button name="autorizado" type="object" string="Autorizado" class="btn-success"/>
+
+                    <button name="cancelado" type="object" string="Cancelado" class="btn-danger"/>
+
+                    <field name="EstatusAsunto"  widget="statusbar" statusbar_visible="pendiente,enviado"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="fechadocumento" required="1" widget="date"/>
+                    <field name="observaciones"/>
+                    </group>
+                    <group>
+                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

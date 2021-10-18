@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--CATEGORIA DE SEGURIDAD  -->
+    <record id="module_tramitebase_category" model="ir.module.category">
+        <field name="name">TRAMITE BASE</field>
+    </record>
+    <!-- SOLICITUD-->
+    <record id="solicitud_tramite_group_user" model="res.groups">
+        <field name="name">Solicitud de tramite</field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="solicitud_lectura_tramite_group_user" model="res.groups">
+        <field name="name">Solicitud de tramite base lectura</field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="requerimiento_group_user" model="res.groups">
+        <field name="name">Requerimiento de tramite</field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+
+    <record id="analisis_group_user" model="res.groups">
+        <field name="name">Analisis de tramite</field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+
+
+
+    <record id="gestion_tramites_group_user" model="res.groups">
+        <field name="name">Gestion de Solicitudes </field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+
+
+    <record id="tiempo_tramite_group_user" model="res.groups">
+        <field name="name">Tiempo de Respuesta por Etapa</field>
+        <field name="category_id" ref="module_tramitebase_category"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tiempos_tramite_tree_view" model="ir.ui.view">
+        <field name="name">gestiontramites.tiempos.tramite.tree.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">tiempos.tramite.base</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+        <field name="arch" type="xml">
+
+            <tree edit="false" create="false">
+                <field name="nombre_etapa"/>
+                <field name="create_date" string="Fecha de Etapa"/>
+                <field name="dias_etapa" string="Dias en proceso"  type="char"/>
+            </tree>
+
+        </field>
+    </record>
+
+</odoo>

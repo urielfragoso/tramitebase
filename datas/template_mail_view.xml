@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data noupdate="0">
+        <!--SOLICITUD DE LA INSTITUCION-->
+        <record id="solicitud_correo" model="mail.template">
+           <field name="name">Solicitud correo de base</field><!-- -->
+           <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
+           <field name="subject">${object.tipotram.descripcion}</field>
+           <field name="email_to">uriel.fragoso@jap.cdmx.gob.mx; ${object.correo}</field><!--campo del usuario que existe en el modulo de users: ${object.partner_id.email}-->
+           <field name="model_id" ref="tramitebase.model_sol_tramite"/><!--MODULO Y NOMBRE DEL MODELO (TABLA) -->
+           <field name="auto_delete" eval="True"/><!--SE ENVIA Y SE BORRA EL REGISTRO, NO SE GUARDA EN LA CUENTA SALIENTE -->
+           <!--<field name="report_template" ref="website_helpdesk_support_ticket.print_support_request"/>--><!--EN CASO DE MANDAR ADJUNTO CON EL ID DEL CAMPO ATACHMENT -->
+           <!--<field name="report_name">Helpdesk Report</field>-->
+
+
+            <!--con el % le decimos al odoo que estaremos usando codigo python.
+             % if object.company_id.website:
+                   <div>
+                       Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+                   </div>
+               %endif
+             -->
+
+           <field name="body_html">
+               <![CDATA[
+
+   <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+       <span style="color: #222; margin-bottom: 5px; display: block; ">
+       El correo se enviara al asesor asignado con el correo: ${object.correosavisos}
+
+
+           Telefono de la solicitud: <b>${object.telefono}</b>
+       </span>
+       correo de la solicitud: ${object.correo}
+
+       <p></p>
+   </div>
+            ]]></field>
+        </record>
+
+        <!--SOLICITUD DE REQUERIMIENTO-->
+       <record id="solicitud_requerimiento" model="mail.template">
+           <field name="name">Solicitud de requerimiento</field><!-- -->
+           <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
+           <field name="subject">Solicitud de Requerimiento </field>
+           <field name="email_to">uriel.fragoso@jap.cdmx.gob.mx; ${object.RefidSolicitud.correo}</field><!--campo del usuario que existe en el modulo de users: ${object.partner_id.email}-->
+           <field name="model_id" ref="tramitebase.model_sol_requerimiento"/><!--MODULO Y NOMBRE DEL MODELO (TABLA) -->
+           <field name="auto_delete" eval="True"/><!--SE ENVIA Y SE BORRA EL REGISTRO, NO SE GUARDA EN LA CUENTA SALIENTE -->
+           <!--<field name="report_template" ref="website_helpdesk_support_ticket.print_support_request"/>--><!--EN CASO DE MANDAR ADJUNTO CON EL ID DEL CAMPO ATACHMENT -->
+            <!--con el % le decimos al odoo que estaremos usando codigo python.
+             % if object.company_id.website:
+                   <div>
+                       Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+                   </div>
+               %endif
+             -->
+           <field name="body_html">
+               <![CDATA[
+               <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+                   <span style="color: #222; margin-bottom: 5px; display: block; ">
+                        Solicitud de requerimiento a ${object.name}
+                   </span>
+                   observaciones del requerimiento: ${object.observaciones} con fecha de ${object.fechadocumento}
+
+                   <p></p>
+               </div>
+            ]]></field>
+        </record>
+
+
+       <!-- REQUERIMIENTO RESPONDIDO-->
+
+      <record id="requerimiento_respondido" model="mail.template">
+           <field name="name">Requerimiento respondido correo de base</field><!-- -->
+           <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
+           <field name="subject">${object.create_uid.name} ${object.tipotram.name}</field>
+           <field name="email_to">uriel.fragoso@jap.cdmx.gob.mx; ${object.correo}</field><!--campo del usuario que existe en el modulo de users: ${object.partner_id.email}-->
+           <field name="model_id" ref="tramitebase.model_sol_tramite"/><!--MODULO Y NOMBRE DEL MODELO (TABLA) -->
+           <field name="auto_delete" eval="True"/><!--SE ENVIA Y SE BORRA EL REGISTRO, NO SE GUARDA EN LA CUENTA SALIENTE -->
+           <!--<field name="report_template" ref="website_helpdesk_support_ticket.print_support_request"/>--><!--EN CASO DE MANDAR ADJUNTO CON EL ID DEL CAMPO ATACHMENT -->
+           <!--<field name="report_name">Helpdesk Report</field>-->
+
+
+            <!--con el % le decimos al odoo que estaremos usando codigo python.
+             % if object.company_id.website:
+                   <div>
+                       Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+                   </div>
+               %endif
+             -->
+
+           <field name="body_html">
+               <![CDATA[
+
+   <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+       <span style="color: #222; margin-bottom: 5px; display: block; ">
+          REQUERIMIENTO RESPONDIDO Telefono de la solicitud: <b>${object.telefono}</b>
+       </span>
+       correo de la solicitud: ${object.correo}
+
+       <p></p>
+   </div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

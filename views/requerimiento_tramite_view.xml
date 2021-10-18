@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- DATOS DE LA SOLICITUD -->
+    <record id="requerimiento_form_view" model="ir.ui.view">
+        <field name="name">requerimiento.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">sol.requerimiento</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="Oficio de Requerimiento" id="requerimiento">
+                <header>
+                    <button name="notificariap" type="object" string="Notificar a la Institución"
+                            attrs="{'invisible': [('estatus', '=', 'notificado')]}" class="btn-info"/>
+
+                    <field name="estatus"  widget="statusbar" statusbar_visible="pendiente,notificado"/>
+                </header>
+                <sheet>
+                    <h2>Elaboración de Oficio de Requerimiento de la solicitud</h2>
+                    <group>
+
+                        <group>
+                            <field name="RefidSolicitud" readonly="1"/>
+                            <field name="fechadocumento" widget="date"/>
+
+                            <field name="observaciones"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="oficiorequerimiento" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+
+    </record>
+
+
+    <!--INFORMACION PARA MOSTRARA A LA IAP-->
+    <record id="requerimiento_IAP_form_view" model="ir.ui.view">
+        <field name="name">requerimiento.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">sol.requerimiento</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="Oficio de Requerimiento" id="requerimiento" edit="false" create="false">
+                <header>
+                    <button name="notificariap" type="object" string="Notificar a la Institución"
+                            attrs="{'invisible': [('estatus', '=', 'notificado')]}" class="btn-info"/>
+
+                    <field name="estatus"  widget="statusbar" statusbar_visible="pendiente,notificado"/>
+                </header>
+                <sheet>
+                    <h2>Oficio de Requerimiento solicitado</h2>
+                    <group>
+
+                        <group>
+                            <field name="RefidSolicitud" readonly="1"/>
+                            <field name="fechadocumento" widget="date"/>
+
+                            <field name="observaciones"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="oficiorequerimiento" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+
+    </record>
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_solicitud_tramite,Acceso a Solicitud del tramite,model_sol_tramite,solicitud_tramite_group_user,1,1,1,0
+access_solicitud_tramite_lectura,Acceso a Solicitud del tramite lectura,model_sol_tramite,solicitud_lectura_tramite_group_user,1,0,0,0
+
+access_requerimiento_tramite,Acceso a Requerimiento del tramite,model_sol_requerimiento,requerimiento_group_user,1,1,1,0
+access_analisis_tramite,Acceso a Analisis del tramite,model_sol_analisis,analisis_group_user,1,1,1,0
+
+access_tramite_gestion_base,Acceso a Gestion Tramite,model_tramite_gestion_base,gestion_tramites_group_user,1,1,0,0
+access_inserta_gestion_base,Inserta a Gestion Tramite,model_tramite_gestion_base,solicitud_tramite_group_user,1,1,1,0
+access_inserta_tiempo_respuesta_base,Inserta a Tiempo de respuesta por etapa,model_tiempos_tramite_base,gestion_tramites_group_user,1,1,1,0
+access_tiempo_respuesta,Acceso a Tiempo de respuesta por etapa,model_tiempos_tramite_base,solicitud_tramite_group_user,1,1,1,0
