@@ -18,9 +18,9 @@
         'views/gestion_tramite_view.xml',
         'views/tiempos_tramite_view.xml',
         'views/finaliza_tramite_view.xml',
-        'views/menu_view.xml',
         'security/tramite_jap_security.xml',
         'security/ir.model.access.csv',
+        'views/menu_view.xml',
         'datas/template_mail_view.xml'
     ],
     'installable': True,
