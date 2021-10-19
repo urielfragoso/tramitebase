@@ -29,4 +29,32 @@
         </field>
     </record>
 
+
+    <record id="finaliza_tramite_lectura_form_view" model="ir.ui.view">
+        <field name="name">tramitebase.finaliza.tramite.form.view</field><!--NOMBRE DE LA VISTA -->
+        <field name="model">tramite.gestion.base</field><!-- UBICACION Y NOMBRE DEL MODULO -->
+        <field name="arch" type="xml">
+            <!-- TIPO DE VISTA FORM-->
+            <form string="alta tramite" id="altatramite" edit="false" create="false">
+
+                <header align="center">
+                  
+
+                    <field name="EstatusAsunto"  widget="statusbar" statusbar_visible="pendiente,enviado"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="fechadocumento" required="1" widget="date"/>
+                    <field name="observaciones"/>
+                    </group>
+                    <group>
+                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
 </odoo>

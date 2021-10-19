@@ -22,6 +22,8 @@ class tiempostramitegestion(models.Model):
                 record.nombre_etapa = 'Analisis'
             elif record.Etapa ==4:
                 record.nombre_etapa = 'Etapa Final'
+            elif record.Etapa ==1:
+                record.nombre_etapa = 'Etapa Inicial'
 
 
 

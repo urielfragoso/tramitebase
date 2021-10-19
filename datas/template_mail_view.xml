@@ -2,7 +2,7 @@
 <odoo>
    <data noupdate="0">
         <!--SOLICITUD DE LA INSTITUCION-->
-        <record id="solicitud_correo" model="mail.template">
+        <record id="solicitud_correo_base" model="mail.template">
            <field name="name">Solicitud correo de base</field><!-- -->
            <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
            <field name="subject">${object.tipotram.descripcion}</field>
@@ -26,7 +26,11 @@
 
    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
        <span style="color: #222; margin-bottom: 5px; display: block; ">
-       El correo se enviara al asesor asignado con el correo: ${object.correosavisos}
+
+       De la institucion  ${object.create_uid.company_id.name}<br>
+       El correo se enviara al asesor asignado con el correo: ${object.correosavisos}<br>
+
+       Se notificará a jefes: ${object.correosavisosjefes}<br>
 
 
            Telefono de la solicitud: <b>${object.telefono}</b>

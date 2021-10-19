@@ -65,8 +65,14 @@
                 <field name="create_date" string="Fecha de creación"/>
                 <field name="status" string="Estatus" widget="badge" decoration-info="status== 'enviado'"  decoration-success="status== 'autorizado'" decoration-danger="status == 'rechazado' " decoration-warning="status == 'notificado' " />
 
-                <button name="ver_requerimiento" class="fa fa-eye  bg-info" attrs="{'invisible': [('status', '!=', 'notificado')]}"
+                <button name="ver_requerimiento" class="fa fa-eye  bg-warning" attrs="{'invisible': [('status', '!=', 'notificado')]}"
                         type="object"  string="- Ver requerimiento"/>
+
+                <button name="ver_resultado" class="fa fa-eye  bg-success" attrs="{'invisible': [('status', '!=', 'autorizado')]}"
+                        type="object"  string="- Ver Resultado"/>
+                 <button name="ver_resultado" class="fa fa-eye  bg-danger" attrs="{'invisible': [('status', '!=', 'rechazado')]}"
+                        type="object"  string="- Ver Resultado"/>
+
             </tree>
 
         </field>
