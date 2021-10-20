@@ -29,7 +29,7 @@ class tramitesgestion(models.Model):
 
     observaciones = fields.Text(string="Observaciones del trámite", required=1)
 
-    attachment = fields.Many2many('ir.attachment', 'ir_attach_base', 'record_relation_base', 'attachment_id',
+    documentofinal = fields.Many2many('ir.attachment', 'ir_attach_base', 'record_relation_base', 'attachment_id',
                                   string="Oficio de resultado", tracking=1, required=1)
 
     # ABRE SOLICITUD
@@ -126,7 +126,6 @@ class tramitesgestion(models.Model):
         #se autoriza en automatico el campo de la tabla tramite.gestion.base
         self.EstatusAsunto = 'autorizado'
 
-
         #se autoriza el campo de la tabla de gestion general
         filtros_gral = [('RefidSolicitud', '=', self.RefidSolicitud), ('RefIdTipoTram','=',33)]
         tramite_gestion_obj_GRAL = self.env['tramite.gestion'].sudo().search(filtros_gral)
@@ -139,7 +138,7 @@ class tramitesgestion(models.Model):
         filtros = [('id', '=', self.RefidSolicitud), ('status', '=', 'enviado')]
         folio_obj = self.env['sol.tramite'].sudo().search(filtros)
             #SE ACTUALIZA EL ESTATUS A ENVIADO EL FOLIO DE LA IAP ESTADOSFIN
-        folio_obj.write({'status':'autorizado'})
+        folio_obj.status = 'autorizado'
 
         return {"view_mode": "kanban",
                     "res_model": "tramite.gestion.base",
@@ -148,6 +147,9 @@ class tramitesgestion(models.Model):
                     "name":_('Tramite Base'),
                     "view_id":self.env.ref('tramitebase.solicitudes_tramite_kanban_view').id,
                     "context":{'search_default_activo':1}}
+
+
+
 
     def cancelado(self):
         idtram = self.RefIdTipoTram.id
@@ -166,7 +168,7 @@ class tramitesgestion(models.Model):
         filtros = [('id', '=', self.RefidSolicitud), ('status', '=', 'enviado')]
         folio_obj = self.env['sol.tramite'].sudo().search(filtros)
         # SE ACTUALIZA EL ESTATUS A ENVIADO EL FOLIO DE LA IAP
-        folio_obj.write({'status': 'rechazado'})
+        folio_obj.status = 'rechazado'
         return {"view_mode": "kanban",
                 "res_model": "tramite.gestion.base",
                 "type": "ir.actions.act_window",

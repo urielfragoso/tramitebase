@@ -157,7 +157,7 @@ class solicitud(models.Model):
             existe_doc =  vals['attachment']
         except:
             if not self.attachment:
-                raise UserError('Es necesario adjuntar la documentación necesaria write')
+                raise UserError('Es necesario adjuntar la documentación necesaria')
 
 
         # self:  el argumento self trae todos los campos, con los valores nuevos como si fuera la primera vez

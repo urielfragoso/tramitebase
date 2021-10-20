@@ -20,7 +20,26 @@
                     <field name="status"  widget="statusbar" statusbar_visible="pendiente,enviado"/>
                 </header>
                 <sheet>
-                    <sheet><h2>Datos generales de la solicitud</h2></sheet>
+                    <widget name="web_ribbon" title="Autorizado" bg_color="bg-success" attrs="{'invisible': [('status','!=','autorizado')]}"/>
+
+                    <widget name="web_ribbon" title="Rechazado" bg_color="bg-danger" attrs="{'invisible': [('status','!=','rechazado')]}"/>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <a href="https://www.jap.cdmx.gob.mx/portal/index.php?lang=es" class="btn btn-outline-primary" target="_blank">
+                                       <i class="fa fa-download fa-2x"></i> Documentación
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <h2>Datos generales de la solicitud</h2></sheet>
                     <hr/>
                     <attribute name="string">Persona que el representante legal de la IAP, designó para recibir notificaciones</attribute>
                     <group>
@@ -58,7 +77,7 @@
         <field name="model">sol.tramite</field><!--esta etiqueta se refiere a nuestro modelo -->
         <field name="arch" type="xml">
             <!-- aqui vamos a definir el tipo de vista-->
-            <tree string="EstatusTram" decoration-danger="status == 'pendiente'" decoration-warning="status == 'notificado'"  >
+            <tree string="EstatusTram" decoration-danger="status == 'pendiente'"   >
 
                 <field name="id"/>
                 <field name="personavalida"/>

@@ -20,7 +20,7 @@
                     <field name="observaciones"/>
                     </group>
                     <group>
-                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                       <field name="documentofinal" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
                     </group>
 
                 </sheet>
@@ -38,17 +38,19 @@
             <form string="alta tramite" id="altatramite" edit="false" create="false">
 
                 <header align="center">
-                  
-
                     <field name="EstatusAsunto"  widget="statusbar" statusbar_visible="pendiente,enviado"/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Autorizado" bg_color="bg-success" attrs="{'invisible': [('EstatusAsunto','!=','autorizado')]}"/>
+
+                    <widget name="web_ribbon" title="Rechazado" bg_color="bg-danger" attrs="{'invisible': [('EstatusAsunto','!=','rechazado')]}"/>
+
                     <group>
                         <field name="fechadocumento" required="1" widget="date"/>
                     <field name="observaciones"/>
                     </group>
                     <group>
-                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                       <field name="documentofinal" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
                     </group>
 
                 </sheet>

@@ -31,6 +31,7 @@
                 <field name="id"/>
                 <field name="RefIdIAP"/>
                 <field name="EstatusTram"/>
+                <field name="EstatusAsunto"/>
 
                 <templates>
                     <t t-name="kanban-box">
@@ -42,8 +43,10 @@
                                 <ul>
                                     <li>Tramite: <field name="RefIdTipoTram"/></li>
                                     <li>Folio: <field name="RefidSolicitud"/></li>
-                                    <li>Estatus: <field name="EstatusTram"/></li>
+                                    <li>Estatus: <field name="EstatusAsunto"/></li>
                                     <li>Fecha de envío: <field name="create_date"/></li>
+                                    <li>Documento final: <field name="documentofinal" widget="many2many_binary" class="oe_inline"/></li>
+
                                 </ul>
 
                                      <div class="oe_kanban_bottom_right">
@@ -56,8 +59,10 @@
                                          <!-- SE MUESTRA BOTON CUANDO ESTA EN LA ETAPA DE ANALISIS -->
                                             <button  name="analisis" type="object" class="oe_button btn-danger"
                                                     attrs="{'invisible':[('EstatusTram','!=','3')]}">Analisis</button>
-                                            <button  name="resultado" type="object" class="oe_button btn-success"
-                                                    attrs="{'invisible':[('EstatusTram','!=','4')]}">Resultado</button>
+
+                                                <button  name="resultado" type="object" class="oe_button btn-success"
+                                                    attrs="{'invisible':['|',('EstatusTram','!=','4'),('EstatusAsunto','!=','activo')]}">Resultado</button>
+
                                     </div>
                             </div>
 
