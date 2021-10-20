@@ -11,6 +11,7 @@
             <form string="tramitebase" id="tramitebase">
 
                 <header>
+
                     <button name="envio_tramite" type="object" string="Enviar solicitud"
                             attrs="{'invisible': [('status', '!=', 'pendiente')]}" class="btn-info"/>
 
@@ -36,8 +37,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                         <h2>Datos generales de la solicitud</h2></sheet>
                     <hr/>

@@ -29,7 +29,7 @@ class tramitesgestion(models.Model):
 
     observaciones = fields.Text(string="Observaciones del trámite", required=1)
 
-    documentofinal = fields.Many2many('ir.attachment', 'ir_attach_base', 'record_relation_base', 'attachment_id',
+    attachment = fields.Many2many('ir.attachment', 'ir_attach_base', 'record_relation_base', 'attachment_id',
                                   string="Oficio de resultado", tracking=1, required=1)
 
     # ABRE SOLICITUD

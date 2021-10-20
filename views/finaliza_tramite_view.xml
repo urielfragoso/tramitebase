@@ -20,7 +20,7 @@
                     <field name="observaciones"/>
                     </group>
                     <group>
-                       <field name="documentofinal" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
                     </group>
 
                 </sheet>
@@ -47,10 +47,10 @@
 
                     <group>
                         <field name="fechadocumento" required="1" widget="date"/>
-                    <field name="observaciones"/>
+                        <field name="observaciones"/>
                     </group>
                     <group>
-                       <field name="documentofinal" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
+                       <field name="attachment" widget="many2many_binary" class="oe_inline" options="{'accepted_file_extensions': '.pdf'}"/>
                     </group>
 
                 </sheet>

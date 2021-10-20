@@ -45,7 +45,7 @@
                                     <li>Folio: <field name="RefidSolicitud"/></li>
                                     <li>Estatus: <field name="EstatusAsunto"/></li>
                                     <li>Fecha de envío: <field name="create_date"/></li>
-                                    <li>Documento final: <field name="documentofinal" widget="many2many_binary" class="oe_inline"/></li>
+                                    <li>Documento final: <field name="attachment" widget="many2many_binary" class="oe_inline"/></li>
 
                                 </ul>
 

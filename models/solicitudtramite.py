@@ -11,7 +11,7 @@ class solicitud(models.Model):
     telefono = fields.Char(string='Telefono', required=1)
     correo = fields.Char(string='Correo', required=1)
     personavalida = fields.Char(string='Persona Valida', tracking=1, required=1)
-    status = fields.Selection([('pendiente', 'Pendiente de enviar'), ('enviado', 'Enviado'), ('notificado', 'Notificado'), ('autorizado', 'Autorizado'),  ('rechazado', 'Rechazado')])
+    status = fields.Selection([('validacion', 'Validacion de enviar'),('pendiente', 'Pendiente de enviar'), ('enviado', 'Enviado'), ('notificado', 'Notificado'), ('autorizado', 'Autorizado'),  ('rechazado', 'Rechazado')])
     tipotram = fields.Many2one(comodel_name='cf.tipos.tramites', string='Tipo de Trámite', default=33)
     observaciones = fields.Text(string='Observaciones')
 
@@ -146,7 +146,7 @@ class solicitud(models.Model):
 
     @api.model
     def create(self,vals):
-        vals['status'] = 'pendiente'
+        vals['status'] = 'validacion'
 
         return super(solicitud,self).create(vals)
 
