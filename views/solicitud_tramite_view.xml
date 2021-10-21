@@ -26,17 +26,16 @@
                     <widget name="web_ribbon" title="Rechazado" bg_color="bg-danger" attrs="{'invisible': [('status','!=','rechazado')]}"/>
 
                     <sheet>
+                        <!--
                         <div class="oe_button_box" name="button_box">
                             <div class="row">
                                 <div class="col-12">
-
                                     <a href="https://www.jap.cdmx.gob.mx/portal/index.php?lang=es" class="btn btn-outline-primary" target="_blank">
                                        <i class="fa fa-download fa-2x"></i> Documentación
                                     </a>
-
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <h2>Datos generales de la solicitud</h2></sheet>
                     <hr/>
