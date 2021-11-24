@@ -8,9 +8,10 @@
     'description': 'Modulo para ver tramites',
 
 
-    'depends': ['base','mail'],
+    'depends': ['base','mail','registroiap'],
 
     'data': [
+
         'views/solicitud_tramite_view.xml',
         'views/requerimiento_tramite_view.xml',
         'views/analisis_tramite_view.xml',

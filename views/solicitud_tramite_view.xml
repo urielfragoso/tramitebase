@@ -41,11 +41,28 @@
                     <hr/>
                     <attribute name="string">Persona que el representante legal de la IAP, designó para recibir notificaciones</attribute>
                     <group>
+                       <field name="nombreiap" readonly="1"/>
                         <group>
                             <field name="personavalida"/>
                             <field name="telefono"/>
                             <field name="correo"/>
                         </group>
+                    </group>
+                    <group>
+                        <field name="iap"/>
+                        <field name="apoderados_id" domain="[('partner_id','=',iap)]" options="{'no_quick_create':false, 'no_create': true, 'no_create_edit': false, 'no_open':True}">
+                            <tree editable="bottom" create="false" edit="false">
+                                <field name="partner_id" />
+                                 <field name="primernombre"/>
+                                 <field name="segundonombre"/>
+                                 <field name="primerapellido"/>
+                                <field name="segundoapellido"/>
+                                <field name="refidpoder"/>
+
+
+                            </tree>
+                        </field>
+
                     </group>
                     <group>
                         <group>

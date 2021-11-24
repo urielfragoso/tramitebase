@@ -5,7 +5,7 @@
         <record id="solicitud_correo_base" model="mail.template">
            <field name="name">Solicitud correo de base</field><!-- -->
            <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
-           <field name="subject">${object.tipotram.descripcion}</field>
+           <field name="subject">Solicitud de ${object.tipotram.descripcion}</field>
            <field name="email_to">uriel.fragoso@jap.cdmx.gob.mx; ${object.correo}</field><!--campo del usuario que existe en el modulo de users: ${object.partner_id.email}-->
            <field name="model_id" ref="tramitebase.model_sol_tramite"/><!--MODULO Y NOMBRE DEL MODELO (TABLA) -->
            <field name="auto_delete" eval="True"/><!--SE ENVIA Y SE BORRA EL REGISTRO, NO SE GUARDA EN LA CUENTA SALIENTE -->
@@ -23,22 +23,36 @@
 
            <field name="body_html">
                <![CDATA[
+               <div class="card">
 
-   <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
-       <span style="color: #222; margin-bottom: 5px; display: block; ">
+                <div class="card-body"><div style="text-align: left;">
+                <div style="text-align: right;"><b>Folio: ${object.id}</b><br></div><br> El correo se enviara al asesor asignado con el correo: ${object.correosavisos}<br></div>
+                 Se notificará a jefes: ${object.correosavisosjefes}<br><br>
 
-       De la institucion  ${object.create_uid.company_id.name}<br>
-       El correo se enviara al asesor asignado con el correo: ${object.correosavisos}<br>
+                En representación de la Institución <b>${object.create_uid.company_id.name}</b>, el usuario ${object.create_uid.display_name} envió a través de la plataforma Digital de la JAPCDMX una solicitud con la siguiente información:<br><br>
 
-       Se notificará a jefes: ${object.correosavisosjefes}<br>
+                <b>
+                    </b><table align="center">
+                    <tbody><tr>
+                        <td><b>Tipo de Trámite:</b></td>
+                        <td>${object.tipotram.descripcion}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Folio:</b></td>
+                        <td align="center">${object.id}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Corréo de contacto por parte de la Junta</b></td>
+                    </tr>
+                    <tr>
+                    <td style="text-align:center;" colspan="2"><b>${object.correosavisos}</b></td></tr><tr style="text-align:right;">
 
+                </tr></tbody></table>
+                <br><br>
+                En un lapso no mayor a 5 días habiles, podrá recibir información a través del <b>Buzón Institucional</b> la resolución de su solicitud.
+            </div>
+            </div>
 
-           Telefono de la solicitud: <b>${object.telefono}</b>
-       </span>
-       correo de la solicitud: ${object.correo}
-
-       <p></p>
-   </div>
             ]]></field>
         </record>
 
@@ -60,14 +74,19 @@
              -->
            <field name="body_html">
                <![CDATA[
-               <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
-                   <span style="color: #222; margin-bottom: 5px; display: block; ">
-                        Solicitud de requerimiento a ${object.name}
-                   </span>
-                   observaciones del requerimiento: ${object.observaciones} con fecha de ${object.fechadocumento}
+               <div class="card">
+                    <div class="card-body">
+                        <div style="text-align: left;">
+                        En relación a su solicitud del trámite de <b>${object.RefidSolicitud.tipotram.descripcion}</b>, se realizan las siguientes observaciones:<br><br>
 
-                   <p></p>
-               </div>
+                            <b>Observaciones:</b> ${object.observaciones}<br><br><br>
+
+                            El documento de notificación podrá visualizarlo en el Módulo de Juicios que se encuentra en la plataforma Digital de la JAPCDMX.<br><br>
+
+                            En un lapso no mayor a 7 días hábiles deberá dar por contestado el requerimiento mencionado y podrá ver la resolución de su solicitud en el <b>Buzón Institucional</b>.
+                        </div>
+                    </div>
+                </div>
             ]]></field>
         </record>
 
@@ -77,7 +96,7 @@
       <record id="requerimiento_respondido" model="mail.template">
            <field name="name">Requerimiento respondido correo de base</field><!-- -->
            <field name="email_from">soportedesk@jap.cdmx.gob.mx</field><!--${object.user_id.email} -->
-           <field name="subject">${object.create_uid.name} ${object.tipotram.name}</field>
+           <field name="subject">Respuesta de Requerimiento - ${object.tipotram.descripcion} </field>
            <field name="email_to">uriel.fragoso@jap.cdmx.gob.mx; ${object.correo}</field><!--campo del usuario que existe en el modulo de users: ${object.partner_id.email}-->
            <field name="model_id" ref="tramitebase.model_sol_tramite"/><!--MODULO Y NOMBRE DEL MODELO (TABLA) -->
            <field name="auto_delete" eval="True"/><!--SE ENVIA Y SE BORRA EL REGISTRO, NO SE GUARDA EN LA CUENTA SALIENTE -->
@@ -95,15 +114,19 @@
 
            <field name="body_html">
                <![CDATA[
+               <div class="card">
+                    <div class="card-body">
+                    El correo se enviara al asesor asignado con el correo: ${object.correosavisos}<br></div>
+                    Se notificará a jefes: ${object.correosavisosjefes}<br><br>
 
-   <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
-       <span style="color: #222; margin-bottom: 5px; display: block; ">
-          REQUERIMIENTO RESPONDIDO Telefono de la solicitud: <b>${object.telefono}</b>
-       </span>
-       correo de la solicitud: ${object.correo}
 
-       <p></p>
-   </div>
+                        <div style="text-align: left;">
+                        La Institución  <b>${object.create_uid.company_id.name}</b>, ha dado respuesta al requerimiento solicitado del Folio <b>${object.id}</b> relacionado al trámite de ${object.tipotram.descripcion}.
+                        <br><br><br>
+                        En un lapso no mayor a 10 días hábiles deberá dar por contestado la resolución del trámite.
+                        </div>
+                    </div>
+                </div>
             ]]></field>
         </record>
     </data>

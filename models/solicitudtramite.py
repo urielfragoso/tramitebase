@@ -7,7 +7,6 @@ class solicitud(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']  # AQUI SE PUEDE HEREDAR MULTIPLES MODELOS Y FUNCIONALIDADES
 
 
-
     telefono = fields.Char(string='Telefono', required=1)
     correo = fields.Char(string='Correo', required=1)
     personavalida = fields.Char(string='Persona Valida', tracking=1, required=1)
@@ -25,6 +24,37 @@ class solicitud(models.Model):
     asesortramite = fields.Text(compute="_get_asesor")
 
     correosavisosjefes = fields.Text(compute="_get_jefes")
+
+    def _get_nombreiap(self):
+        return self.env.user.company_ids.partner_id.display_name
+
+    nombreiap = fields.Char(default=_get_nombreiap)
+
+    def _apoderadosiap(self):
+        usuario = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
+
+        for company in usuario.company_ids:
+            iap = company.partner_id
+        return self.env['apoderados'].sudo().search([('partner_id', '=', iap.id)])
+
+
+    apoderados_id = fields.Many2many('apoderados', string='Lista de Apoderados',
+                                     required=1, tracking=1, default=_apoderadosiap)
+
+
+
+    def _asignacioniap(self):
+
+        usuario = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
+
+        for company in usuario.company_ids:
+            iap = company.partner_id
+        return int(iap.id)
+
+
+    iap = fields.Integer(default=_asignacioniap)
+
+
 
     # FUNCION PARA MOSTRAR LAS ETAPAS EN LA VISTA KANBAN
     def _get_estatus(self):
@@ -136,9 +166,10 @@ class solicitud(models.Model):
                               'RefIdUsuario': user_obj.user_id.id,
                               'RefIdTipoTram': 33,
                              'EstatusAsunto': 'activo',
-                              'RefidSolicitud': record.id}
+                              'RefidSolicitud': record.id,
+                              'origeningreso': "1"}
 
-            tramite_gestion_obj_GRAL.create(nuevo_registro)
+            tramite_gestion_obj_GRAL.sudo().create(nuevo_registro)
 
             # MANDA A LLAMAR TEMPLATE PARA EL ENVIO DE CORREO
             template = self.env.ref('tramitebase.solicitud_correo_base')
