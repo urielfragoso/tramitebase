@@ -49,20 +49,29 @@
                         </group>
                     </group>
                     <group>
-                        <field name="iap"/>
-                        <field name="apoderados_id" domain="[('partner_id','=',iap)]" options="{'no_quick_create':false, 'no_create': true, 'no_create_edit': false, 'no_open':True}">
-                            <tree editable="bottom" create="false" edit="false">
-                                <field name="partner_id" />
-                                 <field name="primernombre"/>
-                                 <field name="segundonombre"/>
-                                 <field name="primerapellido"/>
-                                <field name="segundoapellido"/>
-                                <field name="refidpoder"/>
+                        <field name="num_iap" invisible="1"/>
+                        <!--<field name="apoderados_id" domain="[('partner_id','=',num_iap)]" widget="Selection"/>-->
 
-
-                            </tree>
-                        </field>
-
+                        <field name="apoderados_id" widget="selection" domain="[('partner_id','=',num_iap)]"
+                               options="{'no_quick_create':false, 'no_create': true, 'no_create_edit': false, 'no_open':True}"
+                                context="{'custom_search': 1}" string="Apoderados de:"/>
+                    </group>
+                    <group>
+                        <div class="col-md-10">
+                            <attribute name="string" class="text-danger"><strong>Quien firmará la solicitud:. </strong> </attribute>
+                            <field name="pnombre" /> . <field name="snombre"/> . <field name="apaterno"/>
+                        </div>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="fecha_apoderado" string="Fecha de apoderados" />
+                        </group>
+                        <group>
+                            <field name="escritura_apoderado" string="Num de Escritura"/>
+                        </group>
+                        <group>
+                            <field name="tipo_poder" />
+                        </group>
                     </group>
                     <group>
                         <group>
@@ -95,12 +104,12 @@
             <tree string="EstatusTram" decoration-danger="status == 'pendiente'"   >
 
                 <field name="id"/>
-                <field name="personavalida"/>
+                <field name="nombrecompletoapoderado"/>
                 <field name="create_date" string="Fecha de creación"/>
                 <field name="status" string="Estatus" widget="badge" decoration-info="status== 'enviado'"  decoration-success="status== 'autorizado'" decoration-danger="status == 'rechazado' " decoration-warning="status == 'notificado' " />
 
-                <button name="ver_requerimiento" class="fa fa-eye  bg-warning" attrs="{'invisible': [('status', '!=', 'notificado')]}"
-                        type="object"  string="- Ver requerimiento"/>
+                <!--<button name="ver_requerimiento" class="fa fa-eye  bg-warning" attrs="{'invisible': [('status', '!=', 'notificado')]}"
+                        type="object"  string="- Ver requerimiento"/>-->
 
                 <button name="ver_resultado" class="fa fa-eye  bg-success" attrs="{'invisible': [('status', '!=', 'autorizado')]}"
                         type="object"  string="- Ver Resultado"/>

@@ -18,12 +18,27 @@ class oficioRequerimiento(models.Model):
 
     def notificariap(self):
         refidsolicitud = self.RefidSolicitud.id
+        usuario_create = self.RefidSolicitud.create_uid
         for record in self:
             filtros = [('id', '=', refidsolicitud),('status','=','enviado')]
             folio_obj = self.env['sol.tramite'].sudo().search(filtros)
 
-            #SE ACTUALIZA EL ESTATUS A ENVIADO EL FOLIO DE LA IAP
+            #SE ACTUALIZA EL ESTATUS A ENVIADO EL FOLIO DE LA IAP PARA QUE PUEDA MODIFICAR NUEVAMENTE SU SOLICITUD
             folio_obj.write({'status':'notificado'})
+
+            usuario = self.env['res.users'].sudo().search([('id', '=', usuario_create.id)])
+
+            #SE OBTIENE EL USUARIO QUE CREO LA SOLICITUD PARA OBTENER SU IAP
+            for company in usuario.company_ids:
+                iap = company.partner_id
+
+                #SE ACTUALIZA EL ESTATOS DE LA TABLA DE TRAMITE GESTION  PARA QUE SE VEA EN EL BUZON
+                filtros=[('RefIdIAP','=',iap.id),('RefIdTipoTram','=',33),('RefidSolicitud','=',refidsolicitud)]
+                tramite_gestionobj = self.env['tramite.gestion'].sudo().search(filtros)
+
+                if tramite_gestionobj:
+                    tramite_gestionobj.write({'EstatusAsunto':'notificado'})
+
 
         record.write({'estatus': 'notificado'})
 

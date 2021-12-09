@@ -25,38 +25,61 @@ class solicitud(models.Model):
 
     correosavisosjefes = fields.Text(compute="_get_jefes")
 
+    apoderados_id = fields.Many2one(comodel_name='apoderados',
+                                    required=1, tracking=1, help="Lista de apoderados autorizados")
+
+    fecha_apoderado = fields.Date(related="apoderados_id.fechaescritura")
+    escritura_apoderado = fields.Char(related="apoderados_id.noescritura")
+
+    nombrecompletoapoderado = fields.Char(compute="_get_nombrecompletoapoderado")
+
+    pnombre = fields.Char(related="apoderados_id.primernombre", string="El firmante será")
+    snombre = fields.Char(related="apoderados_id.segundonombre")
+    apaterno = fields.Char(related="apoderados_id.primerapellido")
+    amaterno = fields.Char(related="apoderados_id.segundoapellido")
+
+    tipo_poder = fields.Many2many(related="apoderados_id.refidpoder")
+
+
     def _get_nombreiap(self):
         return self.env.user.company_ids.partner_id.display_name
 
     nombreiap = fields.Char(default=_get_nombreiap)
 
-    def _apoderadosiap(self):
-        usuario = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
+    # FUNCION PARA CONCATENAR EL NOMBRE COMPLETO DEL APODERADO
+    def _get_nombrecompletoapoderado(self):
+            for record in self:
+                if bool(record.apoderados_id.segundonombre):
+                    v_segundonombre = record.apoderados_id.segundonombre
+                else:
+                    v_segundonombre = ''
+                if bool(record.apoderados_id.primerapellido):
+                    v_primerapellido = record.apoderados_id.primerapellido
+                else:
+                    v_primerapellido = ''
 
-        for company in usuario.company_ids:
-            iap = company.partner_id
-        return self.env['apoderados'].sudo().search([('partner_id', '=', iap.id)])
+                if bool(record.apoderados_id.segundoapellido):
+                    v_segundoapellido = record.apoderados_id.segundoapellido
+                else:
+                    v_segundoapellido = ''
+                record.nombrecompletoapoderado = record.pnombre + ' ' + v_segundonombre + ' ' + v_primerapellido + ' ' + v_segundoapellido
 
-
-    apoderados_id = fields.Many2many('apoderados', string='Lista de Apoderados',
-                                     required=1, tracking=1, default=_apoderadosiap)
-
-
+            # FUNCION PARA ASIGNAR LA IAP EN SESION AL CAMPO SELECTION DE APODERADOS
 
     def _asignacioniap(self):
-
         usuario = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
-
+        iap = False
         for company in usuario.company_ids:
             iap = company.partner_id
-        return int(iap.id)
+        if iap:
+            return int(iap.id)
+        else:
+            return 0
+
+    num_iap = fields.Integer(default=_asignacioniap)
 
 
-    iap = fields.Integer(default=_asignacioniap)
 
-
-
-    # FUNCION PARA MOSTRAR LAS ETAPAS EN LA VISTA KANBAN
     def _get_estatus(self):
         usuario = self.env['res.users'].sudo().search([('id', '=', self.env.uid)])
 
