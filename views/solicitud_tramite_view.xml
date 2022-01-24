@@ -74,6 +74,16 @@
                         </group>
                     </group>
                     <group>
+
+                                <group>
+                                    <field name="state_id" options="{'no_quick_create':True, 'no_create': True, 'no_create_edit': True, 'no_open':True}" widget="selection"/>
+
+                                </group>
+                                <group>
+                                    <field name="city_id" options="{'no_quick_create':True, 'no_create': True, 'no_create_edit': True, 'no_open':True}" widget="selection"/>
+                                </group>
+                            </group>
+                    <group>
                         <group>
                             <field name="observaciones"/>
                         </group>

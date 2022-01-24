@@ -1,5 +1,6 @@
 from odoo import fields, models, api
-from datetime import  datetime
+from datetime import datetime, timedelta
+import numpy as np
 
 
 
@@ -13,6 +14,7 @@ class tiempostramitegestion(models.Model):
 
     dias_etapa = fields.Integer(compute="_dias_proceso")
     nombre_etapa = fields.Text(compute="_nombre_etapa")
+    dias_tramite = fields.Integer(compute="_dias_tramite")
 
     def _nombre_etapa(self):
         for record in self:
@@ -40,54 +42,63 @@ class tiempostramitegestion(models.Model):
                 if etapa_obj.Origen == 1:
                     a = datetime.date(idgestion.create_date)
                     b = datetime.date(etapa_obj.create_date)
-                    calculo_dias = ( b - a)
+
+                    calculo_dias = ( b - a).days
+                    res = np.busday_count(a.strftime('%Y-%m-%d'), b.strftime('%Y-%m-%d'),
+                                          weekmask=[1, 1, 1, 1, 1, 0, 0])
             else:
                 if etapa_obj.Origen ==1:
                     a = datetime.date(idgestion.create_date)
                     b = datetime.date(etapa_obj.create_date)
-                    calculo_dias = (b - a)
+
+                    calculo_dias = (b - a).days
+                    res = np.busday_count(a.strftime('%Y-%m-%d'), b.strftime('%Y-%m-%d'),
+                                          weekmask=[1, 1, 1, 1, 1, 0, 0])
                 else:
 
                     filtro = [('Etapa', '=',etapa_obj.Origen),('RefIdGestion','=',idgestion.id)]
                     etapa_inicial_calculo = self.env['tiempos.tramite.base'].sudo().search(filtro)
                     a = datetime.date(etapa_inicial_calculo.create_date)
                     b = datetime.date(etapa_obj.create_date)
-                    calculo_dias = ( b - a)
-            record.dias_etapa = calculo_dias.days
+                    calculo_dias = ( b - a).days
+
+                    res = np.busday_count(a.strftime('%Y-%m-%d'), b.strftime('%Y-%m-%d'),
+                                          weekmask=[1, 1, 1, 1, 1, 0, 0])
+            record.dias_etapa = res
 
 
 
 
 
+    def _dias_tramite(self):
+        idgestion = self.RefIdGestion.id
+        #obtiene la fecha inicial de la primera etapa
+        filtro = [('RefIdGestion', '=', idgestion), ('Etapa', '=', 1)]
+        etapa_inicial_calculo = self.env['tiempos.tramite.base'].sudo().search(filtro)
+        #se crea variable con la fecha inicial
+        a = datetime.date(etapa_inicial_calculo.create_date)
+
+        #se obtienen los registros de todas las etapas
+        filtro = [('RefIdGestion', '=', idgestion)]
+        fecha_etapa = self.env['tiempos.tramite.base'].sudo().search(filtro)
+
+        #se obtiene el ultimo registro de self
+        ultimo_reg = (self.ids.pop())
 
 
+        for record in fecha_etapa:
+
+            if record.id == ultimo_reg:
+
+                b = datetime.now()
+                res = np.busday_count(a.strftime('%Y-%m-%d'), b.strftime('%Y-%m-%d'), weekmask=[1, 1, 1, 1, 1, 0, 0])
+            else:
+
+                b = datetime.date(record.create_date)
 
 
+                #se contabilizan los dias sin fines de semana
+                res = np.busday_count(a.strftime('%Y-%m-%d'), b.strftime('%Y-%m-%d'),weekmask=[1,1,1,1,1,0,0])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            record.dias_tramite = res
 

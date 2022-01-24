@@ -22,7 +22,7 @@
         'security/tramite_jap_security.xml',
         'security/ir.model.access.csv',
         'reports/report.xml',
-        'reports/reporte_solicitud.xml',
+
         'datas/template_mail_view.xml',
         'views/menu_view.xml'
     ],

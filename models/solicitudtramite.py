@@ -2,6 +2,10 @@
 from odoo import models,fields, api
 from odoo.exceptions import UserError
 
+
+
+
+
 class solicitud(models.Model):
     _name='sol.tramite'
     _inherit = ['mail.thread', 'mail.activity.mixin']  # AQUI SE PUEDE HEREDAR MULTIPLES MODELOS Y FUNCIONALIDADES
@@ -39,6 +43,12 @@ class solicitud(models.Model):
     amaterno = fields.Char(related="apoderados_id.segundoapellido")
 
     tipo_poder = fields.Many2many(related="apoderados_id.refidpoder")
+
+    state_id = fields.Many2one(comodel_name='res.country.state', domain="[('country_id', '=', 156)]", string='Estado',
+                               default=493, tracking=1)
+    # 'res.country.state', 'Estado', domain="[('country_id', '=', 156)]", default=493,  tracking=1)
+    city_id = fields.Many2one(
+        'res.country.state.city', 'Municipio/Alcaldía', domain="[('state_id', '=', state_id)]", required=1, tracking=1)
 
 
     def _get_nombreiap(self):
@@ -197,6 +207,13 @@ class solicitud(models.Model):
             # MANDA A LLAMAR TEMPLATE PARA EL ENVIO DE CORREO
             template = self.env.ref('tramitebase.solicitud_correo_base')
             template.send_mail(self.id, force_send=True)
+
+
+
+
+
+
+
 
     @api.model
     def create(self,vals):

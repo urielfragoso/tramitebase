@@ -8,7 +8,9 @@
             <tree edit="false" create="false">
                 <field name="nombre_etapa"/>
                 <field name="create_date" string="Fecha de Etapa"/>
-                <field name="dias_etapa" string="Dias en proceso"  type="char"/>
+                <field name="dias_etapa" string="Dias en etapa"  type="char"/>
+                <field name="dias_tramite" string="Dias en Tramite" type="char" />
+                <field name="id"/>
             </tree>
 
         </field>
